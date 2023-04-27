@@ -10,7 +10,7 @@ pipeline {
           doGenerateSubmoduleConfigurations: false, 
           extensions: [], 
           submoduleCfg: [], 
-          userRemoteConfigs: [[url: 'https://github.com/your-username/microservices-project.git']]
+          userRemoteConfigs: [[url: 'https://github.com/pavankudipudi/microservices.git']]
         ])
         
         // Build the Maven project and create the JAR file
@@ -24,7 +24,7 @@ pipeline {
     stage('Test') {
       steps {
         // Start the Docker container for the microservices application
-        sh 'docker run -d --name microservices-project -p 8080:8080 myregistry.com/microservices-project:latest'
+        sh 'docker run -d --name microservices-project -p 8081:8081 myregistry.com/microservices-project:latest'
         
         // Run the integration tests using Postman
         sh 'newman run postman/integration-tests.postman_collection.json --env-var base_url=http://localhost:8080'

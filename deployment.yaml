@@ -16,4 +16,4 @@ spec:
         - name: microservices-project
           image: myregistry.com/microservices-project:latest
           ports:
-            - containerPort: 8080
+            - containerPort: 8081
