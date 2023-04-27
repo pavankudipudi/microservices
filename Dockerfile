@@ -3,7 +3,7 @@ FROM openjdk:11-jre-slim
 WORKDIR /app
 RUN mkdir target
 
-COPY /etc/maven/target/microservices-project.jar /target/
+COPY target/microservices-project.jar /app/
 
 
 WORKDIR /app
