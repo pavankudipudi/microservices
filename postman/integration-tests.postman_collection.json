@@ -1,0 +1,54 @@
+{
+    "info": {
+      "_postman_id": "8e40606c-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "name": "Integration Tests"
+    },
+    "item": [
+      {
+        "name": "Get users",
+        "request": {
+          "method": "GET",
+          "header": [],
+          "url": {
+            "raw": "{{base_url}}/users",
+            "host": [
+              "{{base_url}}"
+            ],
+            "path": [
+              "users"
+            ]
+          },
+          "description": "Get all users"
+        },
+        "response": []
+      },
+      {
+        "name": "Create user",
+        "request": {
+          "method": "POST",
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "body": {
+            "mode": "raw",
+            "raw": "{\"name\":\"John Doe\",\"email\":\"john.doe@example.com\"}"
+          },
+          "url": {
+            "raw": "{{base_url}}/users",
+            "host": [
+              "{{base_url}}"
+            ],
+            "path": [
+              "users"
+            ]
+          },
+          "description": "Create a new user"
+        },
+        "response": []
+      }
+    ]
+  }
+  

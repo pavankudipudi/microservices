@@ -1,0 +1,44 @@
+pipeline {
+  agent any
+  
+  stages {
+    stage('Build') {
+      steps {
+        // Checkout the code from Git repository
+        checkout([$class: 'GitSCM', 
+          branches: [[name: 'main']], 
+          doGenerateSubmoduleConfigurations: false, 
+          extensions: [], 
+          submoduleCfg: [], 
+          userRemoteConfigs: [[url: 'https://github.com/your-username/microservices-project.git']]
+        ])
+        
+        // Build the Maven project and create the JAR file
+        sh 'mvn clean package'
+        
+        // Build the Docker image and tag it with the latest version
+        sh 'docker build -t myregistry.com/microservices-project:latest .'
+      }
+    }
+    
+    stage('Test') {
+      steps {
+        // Start the Docker container for the microservices application
+        sh 'docker run -d --name microservices-project -p 8080:8080 myregistry.com/microservices-project:latest'
+        
+        // Run the integration tests using Postman
+        sh 'newman run postman/integration-tests.postman_collection.json --env-var base_url=http://localhost:8080'
+        
+        // Stop and remove the Docker container
+        sh 'docker stop microservices-project && docker rm microservices-project'
+      }
+    }
+    
+    stage('Deploy') {
+      steps {
+        // Deploy the Kubernetes resources for the microservices application
+        sh 'kubectl apply -f deployment.yaml -f service.yaml'
+      }
+    }
+  }
+}
